@@ -5,10 +5,9 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class NumberFormatterTest {
-
+	NumberFormatter numberFormatter = new NumberFormatter();
 	@Test
 	public void test() {
-NumberFormatter numberFormatter = new NumberFormatter();
 		
 		//test single digit results
 		assertEquals("1M", numberFormatter.numberPrettifier(1000000));
@@ -42,6 +41,37 @@ NumberFormatter numberFormatter = new NumberFormatter();
 		
 		//test negative case
 		assertEquals("Invalid Number", numberFormatter.numberPrettifier(-50));		
+	}
+	
+	@Test
+	public void testValueBeforeDecimal(){
+		assertEquals(1, numberFormatter.getWholeNumberDigits(1000000, 1000000));
+		assertEquals(10, numberFormatter.getWholeNumberDigits(10000000, 1000000));
+		assertEquals(100, numberFormatter.getWholeNumberDigits(100000000, 1000000));
+	}
+	
+	@Test
+	public void testValueAfterDecimal(){
+		assertEquals("", numberFormatter.getDecimalRepresentation(1000000, 1000000));
+		assertEquals(".2", numberFormatter.getDecimalRepresentation(1200000, 1000000));
+		assertEquals(".3", numberFormatter.getDecimalRepresentation(1250000, 1000000));
+	}
+	
+//	@Test
+//	public void testSuffix(){
+//		assertEquals("", numberFormatter.getSuffix(10));
+//		assertEquals("M", numberFormatter.getSuffix(1000000));
+//		assertEquals("M", numberFormatter.getSuffix(100000000));
+//		assertEquals("B", numberFormatter.getSuffix(1000000000));
+//		assertEquals("T", numberFormatter.getSuffix(1000000000000));
+//	}
+	
+	@Test
+	public void testNumberFormatter(){
+		assertEquals("1M", numberFormatter.formatMaker(1000000,1000000,'M'));
+		assertEquals("10M", numberFormatter.formatMaker(10000000,1000000,'M'));
+		assertEquals("100M", numberFormatter.formatMaker(100000000,1000000,'M'));
+		assertEquals("1.1M", numberFormatter.formatMaker(1100000,1000000,'M'));
 	}
 
 }

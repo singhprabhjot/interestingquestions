@@ -32,24 +32,24 @@ public class NumberFormatter {
 		}
 		
 		if (inputNumber < million){
-			prettiedNumber = formatNumber (inputNumber , 1, ' ');
+			prettiedNumber = formatMaker (inputNumber , 1, ' ');
 		}
 		else if (inputNumber < billion){
-			prettiedNumber = formatNumber (inputNumber , million, 'M');
+			prettiedNumber = formatMaker (inputNumber , million, 'M');
 		} 
 		else if (inputNumber < trillion ){
-			prettiedNumber = formatNumber (inputNumber , billion, 'B');
+			prettiedNumber = formatMaker (inputNumber , billion, 'B');
 		}
 		else {
-			prettiedNumber = formatNumber (inputNumber , trillion, 'T');
+			prettiedNumber = formatMaker (inputNumber , trillion, 'T');
 		}
 		
 		return prettiedNumber;
 
 	}
 
-	// Return number in form of prettified string.
-	private String formatNumber(double inputNumber, long divisor, char suffix ){
+	// Return String after formating the number.
+	 String formatMaker(double inputNumber, long divisor, char suffix ){
 		StringBuilder prettyNumber = new StringBuilder();
 		
 		int wholeNumberDigits = getWholeNumberDigits(inputNumber, divisor);
@@ -65,13 +65,13 @@ public class NumberFormatter {
 	} 
 	
 	//Returns the digits prior to decimal value
-	private int getWholeNumberDigits(double inputNumber, long divisor){
+	 int getWholeNumberDigits(double inputNumber, long divisor){
 		int wholeNumberDigits = (int) (inputNumber/divisor);
 		return wholeNumberDigits;
 	}
 	
 	// Returns decimal and digits after that. 
-	private String getDecimalRepresentation(double inputNumber, long divisor){
+	 String getDecimalRepresentation(double inputNumber, long divisor){
 		double remainder = inputNumber % divisor;
 		if (remainder != 0){
 			remainder = (remainder / divisor);
