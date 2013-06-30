@@ -6,7 +6,7 @@ package ps.concurrentincrementor;
  * When both threads have finished running, all elements in the array should have the value of two. Verify this
  */
 
-public class ArrayHolder {
+public class ArrayHolder implements ArrayContainer{
 	private int array[];
 	private int index;
 	public ArrayHolder(){
@@ -17,14 +17,19 @@ public class ArrayHolder {
  /* This is a synchronized method to allow access to one thread at a time. Every time a value of new index is increased, 
  * current thread goes to sleep and the second thread is notified to perform the action. 
  */
-	public synchronized void incrementValue() throws InterruptedException {	
+	public synchronized void incrementValue() {	
 		array[index] = array[index] + 1;
 		if (array[index] == 2){
 			index++;
 			notify();
 		}
 		else{
-				wait();
+				try {
+					wait();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		}
 		
 //		System.out.println(Thread.currentThread().getId()+" :  "+ index +": "+array[index-1]);

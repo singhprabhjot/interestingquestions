@@ -1,21 +1,16 @@
 package ps.concurrentincrementor;
 
 public class IncrementorThread implements Runnable{
-	private ArrayHolder arrayHolder;
+	private ArrayContainer arrayContainer;
 	
-	public IncrementorThread(ArrayHolder arrayHolder){
-		this.arrayHolder = arrayHolder;
+	public IncrementorThread(ArrayContainer arrayContainer){
+		this.arrayContainer = arrayContainer;
 	}
 
 	@Override
 	public void run() {
 		for (int i=0;i<1000;i++){
-				try {
-					arrayHolder.incrementValue();
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+			arrayContainer.incrementValue();
 		}
 	}
 

@@ -1,12 +1,14 @@
 package ps.concurrentincrementor;
 
+import java.util.Scanner;
+
 public class Test {
-	ArrayHolder arrayHolder;
+	ArrayContainer arrayContainer;
 	Thread firstThread;
 	Thread secondThread;
 	
 	public static void main(String s[]){
-		Test test = new Test();	
+		Test test = new Test();
 		test.startTest();
 		test.waitForThreadsToFinish();
 		test.testValues();	
@@ -25,9 +27,10 @@ public class Test {
 	}
 
 	public void startTest(){	
-		arrayHolder = new ArrayHolder();
-		IncrementorThread firstIncrementor = new IncrementorThread(arrayHolder);
-		IncrementorThread secondIncrementor = new IncrementorThread(arrayHolder);
+		arrayContainer = new ArrayHolderRedefined();
+//		arrayContainer = new ArrayHolder();
+		IncrementorThread firstIncrementor = new IncrementorThread(arrayContainer);
+		IncrementorThread secondIncrementor = new IncrementorThread(arrayContainer);
 		firstThread  = new Thread(firstIncrementor);
 		secondThread = new Thread(secondIncrementor);
 		firstThread.start();
@@ -35,9 +38,9 @@ public class Test {
 	}
 	
 	private  void testValues() {
-		int array[] =arrayHolder.getArray();
+		int array[] =arrayContainer.getArray();
 		boolean isError = false;
-		for (int i = 0; i < array.length; i++) {
+		for (int i = 0; i < array.length-1; i++) {
 			if (array[i]!=2){
 				isError = true;
 				break;
@@ -45,13 +48,10 @@ public class Test {
 		}
 		
 		if (!isError){
-			System.out.println("Application Running Fine");
+			System.out.println("Application Running As Expected");
 		}
 		else{
 			System.out.println("Application not running as expected");
-		}
-		
+		}	
 	}
-
-	
 }
